@@ -69,7 +69,7 @@
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       const video = document.getElementById('video');
-      const videoSrc = 'https://catchup.yuppcdn.net/amazonv2/36/preview/starjalsha/master/chunklist.m3u8';
+      const videoSrc = 'http://38.96.178.201/live/STARJALSHA/index.m3u8';
 
       if (Hls.isSupported()) {
         const hls = new Hls();
@@ -123,7 +123,7 @@
     function shareStream() {
       if (navigator.share) {
         navigator.share({
-          title: 'BTV',
+          title: 'STAR JALSHA',
           url: window.location.href
         }).catch(err => console.error(err));
       } else {
