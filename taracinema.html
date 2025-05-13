@@ -1,128 +1,411 @@
-<html>
+<!DOCTYPE html>
+
+<html lang="bn">
 
 <head>
 
-<title></title>
- <link rel="icon" href=""> 
-<link rel="stylesheet" type="text/css" href="">
-    <script src="//content.jwplatform.com/libraries/SAHhwvZq.js"></script>
+  <meta charset="UTF-8">
 
-<script src="https://cdn.jsdelivr.net/npm/clappr@latest/dist/clappr.min.js" type="text/javascript"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<script src="https://cdn.jsdelivr.net/npm/level-selector@0.2.0/dist/level-selector.min.js"></script>
+  <title>BongoBD/Chorki-style Player</title>
 
-<script disable-devtool-auto src='https://cdn.jsdelivr.net/npm/disable-devtool@latest'></script>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 
-<script src="https://cdn.jsdelivr.net/npm/@clappr/hlsjs-playback@1.0.1/dist/hlsjs-playback.min.js"></script><div id="player" style="height: 100%; width: 100%;"></div>
-</head>
-<body>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-</div>
+  <style>
 
-<script>
+    body {
 
-    var player = new Clappr.Player({ 
+      margin: 0;
 
-    source: 'http://103.145.48.150:90/laosat24/taratv/index.m3u8',
+      padding: 0;
 
-    width:'100%', 
+      font-family: 'Roboto', sans-serif;
 
-    height:'100%',
+      background: #000;
 
-    autoPlay: true, 
-    stretching: "exactfit",
-    aspectratio: "16:9",
-
-    plugins: [HlsjsPlayback,LevelSelector],
-
-    mimeType: "application/x-mpegURL", 
-
-    mediacontrol: {seekbar: "red", buttons: "#fff"},  
-
-    parentId: "#player"} ); 
-
-</script>
-
-</body>
-
-<script>
-
-setTimeout(videovisible, 3000)
-
-function videovisible() {
-
-    document.getElementById('loading').style.display = 'none'
-
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-
-    const e = document.querySelector("video"),
-
-        n = e.getElementsByTagName("source")[0].src,
-
-        o = {};
-
-    if (Hls.isSupported()) {
-
-        var config = {
-
-            maxMaxBufferLength: 100,
-
-        };
-
-        const t = new Hls(config);
-
-        t.loadSource(n), t.on(Hls.Events.MANIFEST_PARSED, function(n, l) {
-
-            const s = t.levels.map(e => e.height);
-
-            o.quality = {
-
-                default: s[0],
-
-                options: s,
-
-                forced: !0,
-
-                onChange: e => (function(e) {
-
-                    window.hls.levels.forEach((n, o) => {
-
-                        n.height === e && (window.hls.currentLevel = o)
-
-                    })
-
-                })(e)
-
-            };
-
-            new Plyr(e, o)
-
-        }), t.attachMedia(e), window.hls = t
-
-    } else {
-
-        new Plyr(e, o)
+      color: #fff;
 
     }
 
-});
+    
 
-</script>
-<!-- Histats.com  START  (aync)-->
-<script type="text/javascript">var _Hasync= _Hasync|| [];
-_Hasync.push(['Histats.start', '1,4905712,4,0,0,0,00000000']);
-_Hasync.push(['Histats.fasi', '1']);
-_Hasync.push(['Histats.track_hits', '']);
-(function() {
-var hs = document.createElement('script'); hs.type = 'text/javascript'; hs.async = true;
-hs.src = ('//s10.histats.com/js15_as.js');
-(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(hs);
-})();</script>
-<noscript><a href="/" target="_blank"><img  src="//sstatic1.histats.com/0.gif?4905712&101" alt="website stats" border="0"></a></noscript>
-<!-- Histats.com  END  -->
-<script>document.write(atob("PHNjcmlwdCB0eXBlPSd0ZXh0L2phdmFzY3JpcHQnIHNyYz0nLy92YWxsZXlhcm1pZXNzdW5mbG93ZXIuY29tLzYyLzIxLzY0LzYyMjE2NGUwODUwOGU5NTdhY2UxMzM3ODExYjVhNzMxLmpzJz48L3NjcmlwdD4="));</script>
+    .player-container {
+
+      max-width: 1000px;
+
+      margin: 0 auto;
+
+      position: relative;
+
+    }
+
+    
+
+    #videoPlayer {
+
+      width: 100%;
+
+      background: #000;
+
+    }
+
+    
+
+    .controls {
+
+      display: flex;
+
+      align-items: center;
+
+      padding: 10px;
+
+      background: rgba(0, 0, 0, 0.7);
+
+      position: absolute;
+
+      bottom: 0;
+
+      width: 100%;
+
+      box-sizing: border-box;
+
+    }
+
+    
+
+    .play-pause, .volume, .time, .fullscreen {
+
+      margin: 0 10px;
+
+    }
+
+    
+
+    .progress-container {
+
+      flex-grow: 1;
+
+      height: 5px;
+
+      background: #333;
+
+      margin: 0 10px;
+
+      cursor: pointer;
+
+    }
+
+    
+
+    .progress-bar {
+
+      height: 100%;
+
+      background: #E50914; /* BongoBD/Chorki-style red */
+
+      width: 0%;
+
+    }
+
+    
+
+    button {
+
+      background: none;
+
+      border: none;
+
+      color: white;
+
+      font-size: 16px;
+
+      cursor: pointer;
+
+    }
+
+    
+
+    .quality-selector {
+
+      position: absolute;
+
+      top: -60px;
+
+      right: 10px;
+
+      background: rgba(0, 0, 0, 0.7);
+
+      padding: 10px;
+
+      display: none;
+
+    }
+
+    
+
+    .quality-option {
+
+      display: block;
+
+      padding: 5px;
+
+      cursor: pointer;
+
+    }
+
+    
+
+    .quality-option:hover {
+
+      color: #E50914;
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <div class="player-container">
+
+    <video id="videoPlayer"></video>
+
+    <div class="controls">
+
+      <button class="play-pause"><i class="fas fa-play"></i></button>
+
+      <div class="progress-container">
+
+        <div class="progress-bar"></div>
+
+      </div>
+
+      <div class="time">00:00 / 00:00</div>
+
+      <button class="volume"><i class="fas fa-volume-up"></i></button>
+
+      <button class="quality-btn"><i class="fas fa-cog"></i></button>
+
+      <button class="fullscreen"><i class="fas fa-expand"></i></button>
+
+    </div>
+
+    <div class="quality-selector">
+
+      <div class="quality-option" data-quality="high">High (1080p)</div>
+
+      <div class="quality-option" data-quality="medium">Medium (720p)</div>
+
+      <div class="quality-option" data-quality="low">Low (480p)</div>
+
+    </div>
+
+  </div>
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+
+  <script>
+
+    document.addEventListener('DOMContentLoaded', function() {
+
+      const video = document.getElementById('videoPlayer');
+
+      const playPauseBtn = document.querySelector('.play-pause');
+
+      const volumeBtn = document.querySelector('.volume');
+
+      const progressBar = document.querySelector('.progress-bar');
+
+      const progressContainer = document.querySelector('.progress-container');
+
+      const timeDisplay = document.querySelector('.time');
+
+      const qualityBtn = document.querySelector('.quality-btn');
+
+      const qualitySelector = document.querySelector('.quality-selector');
+
+      const fullscreenBtn = document.querySelector('.fullscreen');
+
+
+
+      // BongoBD/Chorki-style HLS stream (example)
+
+      const streamUrl = 'http://103.145.48.150:90/laosat24/taratv/index.m3u8'; // Replace with actual HLS stream
+
+
+
+      let hls = new Hls();
+
+      
+
+      if (Hls.isSupported()) {
+
+        hls.loadSource(streamUrl);
+
+        hls.attachMedia(video);
+
+        hls.on(Hls.Events.MANIFEST_PARSED, function() {
+
+          video.play();
+
+        });
+
+        
+
+        // Quality levels
+
+        hls.on(Hls.Events.MANIFEST_PARSED, function(event, data) {
+
+          const qualityLevels = hls.levels;
+
+          console.log('Available quality levels:', qualityLevels);
+
+        });
+
+      } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+
+        // For Safari which supports native HLS
+
+        video.src = streamUrl;
+
+        video.addEventListener('loadedmetadata', function() {
+
+          video.play();
+
+        });
+
+      }
+
+
+
+      // Play/Pause
+
+      playPauseBtn.addEventListener('click', function() {
+
+        if (video.paused) {
+
+          video.play();
+
+          playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+
+        } else {
+
+          video.pause();
+
+          playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+
+        }
+
+      });
+
+
+
+      // Volume
+
+      volumeBtn.addEventListener('click', function() {
+
+        if (video.volume > 0) {
+
+          video.volume = 0;
+
+          volumeBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
+
+        } else {
+
+          video.volume = 1;
+
+          volumeBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
+
+        }
+
+      });
+
+
+
+      // Progress bar
+
+      video.addEventListener('timeupdate', function() {
+
+        const progress = (video.currentTime / video.duration) * 100;
+
+        progressBar.style.width = progress + '%';
+
+        
+
+        // Update time display
+
+        const currentMinutes = Math.floor(video.currentTime / 60);
+
+        const currentSeconds = Math.floor(video.currentTime % 60);
+
+        const durationMinutes = Math.floor(video.duration / 60);
+
+        const durationSeconds = Math.floor(video.duration % 60);
+
+        
+
+        timeDisplay.textContent = 
+
+          `${currentMinutes}:${currentSeconds < 10 ? '0' + currentSeconds : currentSeconds} / 
+
+           ${durationMinutes}:${durationSeconds < 10 ? '0' + durationSeconds : durationSeconds}`;
+
+      });
+
+
+
+      // Click on progress bar to seek
+
+      progressContainer.addEventListener('click', function(e) {
+
+        const pos = (e.pageX - this.offsetLeft) / this.offsetWidth;
+
+        video.currentTime = pos * video.duration;
+
+      });
+
+
+
+      // Quality selector
+
+      qualityBtn.addEventListener('click', function() {
+
+        qualitySelector.style.display = qualitySelector.style.display === 'block' ? 'none' : 'block';
+
+      });
+
+
+
+      // Fullscreen
+
+      fullscreenBtn.addEventListener('click', function() {
+
+        if (!document.fullscreenElement) {
+
+          video.requestFullscreen().catch(err => {
+
+            console.error('Fullscreen error:', err);
+
+          });
+
+        } else {
+
+          document.exitFullscreen();
+
+        }
+
+      });
+
+    });
+
+  </script>
+
 </body>
- 
+
 </html>
