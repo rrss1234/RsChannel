@@ -1,553 +1,529 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <meta http-equiv="X-UA-Compatible" content="ie-edge">
-
     <meta name="keywords" content="video, streaming, cine arena, cine-arena, sports">
-
-    <meta name="description" content="Rs live streaming - Watch Sports for free.">
-
-    <title>Rs Live Tv</title>
-
+    <meta name="description" content="Rs Live Streaming - Watch Sports, Movies, and Music for free.">
+    <title>Rs Live TV</title>
     <link rel="icon" href="favicon.png">
-
-    <script src="https://cdn.tailwindcss.com"></script>
-
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-
-      /* Menu Styling */
-
-        .menu {
-
-            display: flex;
-
-            justify-content: center;
-
-            align-items: center;
-
-            gap: 20px;
-
-            margin-top:10px;
-
-	    padding-left:10px;
-
-	    padding-right:10px;
-
-            width: 100%;
-
-            z-index: 10;
-
+        body {
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+            overflow-x: hidden;
         }
 
-
+        /* Menu Styling */
+        .menu {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin: 10px auto;
+            padding: 10px;
+            width: 100%;
+            max-width: 1200px;
+            z-index: 10;
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            flex-wrap: wrap;
+        }
 
         .menu a {
-
             text-decoration: none;
-
             color: #fff;
-
-            font-size: 18px;
-
-            font-weight: bold;
-
-            padding: 10px;
-
+            font-size: 16px;
+            font-weight: 600;
+            padding: 10px 15px;
             border-radius: 8px;
-
             position: relative;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            white-space: nowrap;
+        }
 
+        .menu a:hover {
+            background-color: #ffffff20;
+            transform: scale(1.05);
+        }
+
+        .menu a i {
+            margin-right: 8px;
+            font-size: 18px;
+        }
+
+        /* Channel Card Styling */
+        .channel-card {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             overflow: hidden;
-
-            transition: color 0.3s ease;
-
+            position: relative;
+            width: 100%;
         }
 
+        .channel-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
 
+        .channel-card img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            margin: 0 auto;
+            transition: transform 0.3s ease;
+        }
 
-        /* Neon Glow Effect */
+        .channel-card:hover img {
+            transform: scale(1.1);
+        }
 
-        .menu a::before {
+        .channel-card p {
+            font-size: 14px;
+            font-weight: 500;
+            margin-top: 8px;
+            padding: 0 10px;
+        }
 
-            content: '';
+        /* Dark Mode */
+        .dark .channel-card {
+            background: #1f2937;
+            color: #e5e7eb;
+        }
 
+        .dark .menu {
+            background: linear-gradient(135deg, #111827, #374151);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            padding: 20px;
+            color: #fff;
+            text-align: center;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.2);
+            margin-top: 20px;
+        }
+
+        /* Search Bar */
+        .search-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        #search {
+            width: 100%;
+            padding: 10px 40px 10px 15px;
+            border-radius: 8px;
+            border: 1px solid #d1d5db;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        #search:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 8px rgba(59, 130, 246, 0.3);
+        }
+
+        .search-container i {
             position: absolute;
-
+            right: 15px;
             top: 50%;
+            transform: translateY(-50%);
+            color: #6b7280;
+            font-size: 16px;
+        }
 
-            left: 50%;
-
-            width: 300%;
-
-            height: 300%;
-
-            background-color: rgba(0, 255, 255, 0.7);
-
-            animation: neon-border 3s infinite alternate;
-
-            transform: translate(-50%, -50%);
-
+        /* Floating Action Button */
+        .fab {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #3b82f6;
+            color: #fff;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
-
-            z-index: -1;
-
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0 0.3s ease;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1000;
         }
 
-
-
-        @keyframes neon-border {
-
-            0% {
-
-                box-shadow: 0 0 10px rgba(0, 255, 255, 1), 0 0 20px rgba(0, 255, 255, 0.8), 0 0 30px rgba(0, 255, 255, 0.6);
-
-                background-color: rgba(0, 255, 255, 0.7);
-
-            }
-
-            50% {
-
-                box-shadow: 0 0 10px rgba(255, 0, 255, 1), 0 0 20px rgba(255, 0, 255, 0.8), 0 0 30px rgba(255, 0, 255, 0.6);
-
-                background-color: rgba(255, 0, 255, 0.7);
-
-            }
-
-            100% {
-
-                box-shadow: 0 0 10px rgba(255, 255, 0, 1), 0 0 20px rgba(255, 255, 0, 0.8), 0 0 30px rgba(255, 255, 0, 0.6);
-
-                background-color: rgba(255, 255, 0, 0.7);
-
-            }
-
+        .fab:hover {
+            transform: scale(1.1);
+            background: #1e3a8a;
         }
 
-      
+        /* Back to Top */
+        .back-to-top {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            background: #3b82f6;
+            color: #fff;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            z-index: 1000;
+        }
 
-	    .sticky-footer {
+        .back-to-top.show {
+            display: flex;
+        }
 
-           position: fixed;
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-           bottom: 0;
+        .channel-card {
+            animation: fadeIn 0.5s ease forwards;
+        }
 
-           width: 100%;
+        /* Responsive Design */
+        @media (max-width: 640px) {
+            .menu a {
+                font-size: 14px;
+                padding: 8px 12px;
+            }
 
-           background: #fff;
+            .channel-card img {
+                width: 60px;
+                height: 60px;
+            }
 
-           color: white;
+            .channel-card p {
+                font-size: 12px;
+            }
 
-           text-align: center;
+            #search {
+                font-size: 12px;
+                padding: 8px 35px 8px 12px;
+            }
 
-           padding: 0px;
+            .search-container i {
+                font-size: 14px;
+            }
+        }
 
-	    }
-
-      
-
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            }
+        }
     </style>
-<div style="position: fixed; bottom: 20px; right: 13px; z-index: 9999; background: rgb(0, 136, 204); padding: 8px 11px; border-radius: 26px; display: flex; align-items: center; box-shadow: rgba(0, 0, 0, 0.3) 0px 4px 8px; transition: 5.1s;">
-      <a href="https://t.me/rslivetv" target="_blank" style="display: flex; align-items: center; text-decoration: none; color: white;">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Telegram_logo.svg/2048px-Telegram_logo.svg.png" alt="Telegram" style="width: 30px; height: 30px; margin-right: 8px;">
-        <span style="font-weight: bold;">Telegram Join ✓ </span>
-      </a>
-</div>
 </head>
-
 <body class="bg-gray-100 text-gray-900 transition-all">
-
-
-
     <!-- Header -->
-
-    <header class="p-4 bg-blue-900 text-white text-center text-2xl font-bold">
-
-        <a href="https://rslivetv.netlify.app/"><img src="rslivetv.jpg" class="h-10 md:h-10 lg:h-10 mx-auto"></a>
-
+    <header class="p-4 bg-blue-900 text-white text-center text-xl font-bold flex justify-between items-center">
+        <a href="https://rslivetv.netlify.app/">
+            <img src="rslivetv.jpg" class="h-8 mx-auto md:mx-0" alt="Rs Live TV">
+        </a>
+        <button id="theme-toggle" class="p-2 bg-gray-100 text-black rounded-full">
+            <i class="fas fa-moon text-lg"></i>
+        </button>
     </header>
 
-  <!-- Menu Section -->
+    <!-- Menu Section -->
+    <nav class="menu">
+        <a href="https://rslivetv.netlify.app/"><i class="fas fa-tv"></i>Live</a>
+        <a href="https://livesports24.netlify.app/"><i class="fas fa-cricket-bat-ball"></i>Cricket</a>
+        <a href="https://rslivemusic.netlify.app/"><i class="fas fa-music"></i>Music</a>
+        <a href="https://rslivemovie.netlify.app"><i class="fas fa-film"></i>Movie</a>
+    </nav>
 
-    <div class="menu">
-
-        <a href="https://rslivetv.netlify.app/">Live</a>
-
-	<a href="https://livesports24.netlify.app/">Cricket</a>
-
-        <a href="https://rslivemusic.netlify.app/">Music</a>
-
-        <a href="https://rslivemovie.netlify.app">Movie</a>
-
-       
-
+    <!-- Search Bar -->
+    <div class="flex justify-center items-center p-4">
+        <div class="search-container">
+            <input type="search" id="search" placeholder="Search Channels..." 
+                   class="focus:outline-none">
+            <i class="fas fa-search"></i>
+        </div>
     </div>
-
-   
-
-
-
-    <!-- Search & Dark Mode Toggle -->
-
-    <div class="flex justify-center items-center p-4 gap-4">
-
-        <input type="search" id="search" placeholder="Search Channels..." 
-
-               class="px-4 py-2 rounded border border-gray-400 text-black focus:outline-none focus:ring-2 focus:ring-blue-400">
-
-        <button id="theme-toggle" class="px-4 py-2 bg-gray-100 text-black rounded border border-gray-400">🌙</button>
-
-    </div>
-
-
 
     <!-- Channel Grid -->
-
-    <div id="channel-container" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 p-4">
-
-
-<a href="starjalsha.html" class="channel-card block p-4 border border-gray-200 rounded shadow text-center transition-all">
-
-            <img src="starjalsha.jpg" alt="Star Jalsha HD" class="w-20 h-20 mx-auto">
-
-            <p class="mt-2 font-semibold">Star Jalsha HD</p>
-
-</a>
-
-<a href="enter10bangla.html" class="channel-card block p-4 border border-gray-200 rounded shadow text-center transition-all">
-
-            <img src="enter10bangla.jpeg" alt="Enterr10 Bangla" class="w-20 h-20 mx-auto">
-
-            <p class="mt-2 font-semibold">Enterr10 Bangla</p>
-
-</a>
-
-
-	    <a href="sananda.html" class="channel-card block p-4 border border-gray-200 rounded shadow text-center transition-all">
-
-            <img src="sananda.jpg" alt="Sananda" class="w-20 h-20 mx-auto">
-
-            <p class="mt-2 font-semibold">Sananda Tv</p>
-
-	    </a>
-
-	    <a href="taracinema.html" class="channel-card block p-4 border border-gray-200 rounded shadow text-center transition-all">
-
-            <img src="taracinema.jpg" alt="Tara Cinema" class="w-20 h-20 mx-auto">
-
-            <p class="mt-2 font-semibold">Tara Cinema</p>
-
-	    </a>
-
-
-	    <a href="https://jwplwr.netlify.app/?file=https://live-stream.utkalbongo.com/hls/livebanglatvstream.m3u8" class="channel-card block p-4 border border-gray-200 rounded shadow text-center transition-all">
-
-            <img src="banglaplus.jpg" alt="Bangla Plus" class="w-20 h-20 mx-auto">
-
-            <p class="mt-2 font-semibold">Bangla Plus</p>
-
-	    </a>
-
-	    <a href="zeebangla.htm" class="channel-card block p-4 border border-gray-200 rounded shadow text-center transition-all">
-
-            <img src="zeebangla.jpg" alt="Bangla Plus" class="w-20 h-20 mx-auto">
-
-            <p class="mt-2 font-semibold">Zee Bangla</p>
-
-	    </a>
-
-	    <a href="zeebanglac.htm" class="channel-card block p-4 border border-gray-200 rounded shadow text-center transition-all">
-
-            <img src="zeebanglac.jpg" alt="Bangla Plus" class="w-20 h-20 mx-auto">
-
-            <p class="mt-2 font-semibold">Zee Bangla Cinema</p>
-
-	    </a>
-	    
-
-        <a href="btv.html" class="channel-card block p-4 border border-gray-200 rounded shadow text-center transition-all">
-
-            <img src="btv.jpg" alt="btv" class="w-20 h-20 mx-auto">
-
-            <p class="mt-2 font-semibold">Btv</p>
-
-	</a>
-
-	    <a href="atnbangla.html" class="channel-card block p-4 border border-gray-200 rounded shadow text-center transition-all">
-
-            <img src="atnbangla.jpg" alt="atnbangla" class="w-20 h-20 mx-auto">
-
-            <p class="mt-2 font-semibold">Atn Bangla</p>
-
-	    </a>
-
-	    <a href="atnnews.html" class="channel-card block p-4 border border-gray-200 rounded shadow text-center transition-all">
-
-            <img src="atnnews.jpg" alt="atnnews" class="w-20 h-20 mx-auto">
-
-            <p class="mt-2 font-semibold">Atn News</p>
-
-	    </a>
-
-	    <a href="mytv.html" class="channel-card block p-4 border border-gray-200 rounded shadow text-center transition-all">
-
-            <img src="mytv.jpg" alt="mytv" class="w-20 h-20 mx-auto">
-
-            <p class="mt-2 font-semibold">My Tv</p>
-
-	    </a>
-
-	   <a href="ntv.html" class="channel-card block p-4 border border-gray-200 rounded shadow text-center transition-all">
-
-            <img src="ntv.jpg" alt="ntv" class="w-20 h-20 mx-auto">
-
-            <p class="mt-2 font-semibold">N Tv</p>
-
-	   </a>
-	    
-	    <a href="news24.html" class="channel-card block p-4 border border-gray-200 rounded shadow text-center transition-all">
-
-            <img src="news24.jpg" alt="news24" class="w-20 h-20 mx-auto">
-
-            <p class="mt-2 font-semibold">News 24</p>
-
-	    </a>
-
-        <a href="somoy.html" class="channel-card block p-4 border border-gray-200 rounded shadow text-center transition-all">
-
-            <img src="somoy.jpg" alt="Somoy" class="w-20 h-20 mx-auto">
-
-            <p class="mt-2 font-semibold">Somoy News</p>
-
+    <div id="channel-container" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 p-4 max-w-7xl mx-auto">
+        <a class="channel-card block p-4 text-center" href="/starjalsha">
+            <img src="starjalsha.jpg" alt="Star Jalsha HD">
+            <p>Star Jalsha HD</p>
         </a>
-
-        
-
-        <a href="jamuna.html" class="channel-card block p-4 border border-gray-200 rounded shadow text-center transition-all">
-
-            <img src="jamuna.jpg" alt="Jamuna" class="w-20 h-20 mx-auto">
-
-            <p class="mt-2 font-semibold">Jamuna News</p>
-
+        <a class="channel-card block p-4 text-center" href="/enter10bangla">
+            <img src="enter10bangla.jpeg" alt="Enterr10 Bangla">
+            <p>Enterr10 Bangla</p>
         </a>
-
-
-
-	<a href="deepto.html" class="channel-card block p-4 border border-gray-200 rounded shadow text-center transition-all">
-
-            <img src="deepto.jpg" alt="Deepto" class="w-20 h-20 mx-auto">
-
-            <p class="mt-2 font-semibold">Deepto</p>
-
+        <a class="channel-card block p-4 text-center" href="/sananda">
+            <img src="sananda.jpg" alt="Sananda">
+            <p>Sananda Tv</p>
         </a>
-
-<a href="tsports.html" class="channel-card block p-4 border border-gray-200 rounded shadow text-center transition-all">
-
-            <img src="tsports.jpg" alt="T Sports" class="w-20 h-20 mx-auto">
-
-            <p class="mt-2 font-semibold">T Sports</p>
-
+        <a class="channel-card block p-4 text-center" href="/taracinema">
+            <img src="taracinema.jpg" alt="Tara Cinema">
+            <p>Tara Cinema</p>
         </a>
-
-	<a href="independent.html" class="channel-card block p-4 border border-gray-200 rounded shadow text-center transition-all">
-
-            <img src="independent.jpg" alt="Independent" class="w-20 h-20 mx-auto">
-
-            <p class="mt-2 font-semibold">Independent</p>
-
-	</a>
-
-
-
-	<a href="ekattor.html" class="channel-card block p-4 border border-gray-200 rounded shadow text-center transition-all">
-
-            <img src="ekattor.jpg" alt="Ekattor News" class="w-20 h-20 mx-auto">
-
-            <p class="mt-2 font-semibold">Ekattor News</p>
-
-	</a>
-
-	    
-
-	<a href="channeli.html" class="channel-card block p-4 border border-gray-200 rounded shadow text-center transition-all">
-
-            <img src="channeli.jpg" alt="Channel I" class="w-20 h-20 mx-auto">
-
-            <p class="mt-2 font-semibold">Channel I</p>
-
-	</a>
-
-
-	<a href="showbox.html" class="channel-card block p-4 border border-gray-200 rounded shadow text-center transition-all">
-
-            <img src="showbox.jpg" alt="Show Box" class="w-20 h-20 mx-auto">
-
-            <p class="mt-2 font-semibold">Show Box</p>
-
+        <a href="https://jwplwr.netlify.app/?file=https://live-stream.utkalbongo.com/hls/livebanglatvstream.m3u8" class="channel-card block p-4 text-center">
+            <img src="banglaplus.jpg" alt="Bangla Plus">
+            <p>Bangla Plus</p>
         </a>
-
-        
-
-        <a href="yrfmusic.htm" class="channel-card block p-4 border border-gray-200 rounded shadow text-center transition-all">
-
-            <img src="yrfmusic.jpg" alt="YRF Music" class="w-20 h-20 mx-auto">
-
-            <p class="mt-2 font-semibold">YRF Music</p>
-
-	</a>
-
-
-
-	<a href="masti.html" class="channel-card block p-4 border border-gray-200 rounded shadow text-center transition-all">
-
-            <img src="masti.jpg" alt="Masti" class="w-20 h-20 mx-auto">
-
-            <p class="mt-2 font-semibold">Masti</p>
-
-	</a>
-
-
-
-      <a href="joomusic.html" class="channel-card block p-4 border border-gray-200 rounded shadow text-center transition-all">
-
-            <img src="joomusic.jpg" alt="Joo Music" class="w-20 h-20 mx-auto">
-
-            <p class="mt-2 font-semibold">Joo Music</p>
-
-      </a>
-
-
-
-	<a href="bhpcinema" class="channel-card block p-4 border border-gray-200 rounded shadow text-center transition-all">
-
-            <img src="bhpcinema.jpg" alt="Bhojpuri Cinema" class="w-20 h-20 mx-auto">
-
-            <p class="mt-2 font-semibold">Bhojpuri Cinema</p>
-
-	</a>
-
-        
-
+        <a href="zeebangla.htm" class="channel-card block p-4 text-center">
+            <img src="zeebangla.jpg" alt="Zee Bangla">
+            <p>Zee Bangla</p>
+        </a>
+        <a href="zeebanglac.htm" class="channel-card block p-4 text-center">
+            <img src="zeebanglac.jpg" alt="Zee Bangla Cinema">
+            <p>Zee Bangla Cinema</p>
+        </a>
+        <a class="channel-card block p-4 text-center" href="/btv">
+            <img src="btv.jpg" alt="Btv">
+            <p>Btv</p>
+        </a>
+        <a class="channel-card block p-4 text-center" href="/atnbangla">
+            <img src="atnbangla.jpg" alt="Atn Bangla">
+            <p>Atn Bangla</p>
+        </a>
+        <a class="channel-card block p-4 text-center" href="/atnnews">
+            <img src="atnnews.jpg" alt="Atn News">
+            <p>Atn News</p>
+        </a>
+        <a class="channel-card block p-4 text-center" href="/mytv">
+            <img src="mytv.jpg" alt="My Tv">
+            <p>My Tv</p>
+        </a>
+        <a class="channel-card block p-4 text-center" href="/ntv">
+            <img src="ntv.jpg" alt="N Tv">
+            <p>N Tv</p>
+        </a>
+        <a class="channel-card block p-4 text-center" href="/news24">
+            <img src="news24.jpg" alt="News 24">
+            <p>News 24</p>
+        </a>
+        <a class="channel-card block p-4 text-center" href="/somoy">
+            <img src="somoy.jpg" alt="Somoy News">
+            <p>Somoy News</p>
+        </a>
+        <a class="channel-card block p-4 text-center" href="/jamuna">
+            <img src="jamuna.jpg" alt="Jamuna News">
+            <p>Jamuna News</p>
+        </a>
+        <a class="channel-card block p-4 text-center" href="/deepto">
+            <img src="deepto.jpg" alt="Deepto">
+            <p>Deepto</p>
+        </a>
+        <a href="tsports.html" class="channel-card block p-4 text-center">
+            <img src="tsports.jpg" alt="T Sports">
+            <p>T Sports</p>
+        </a>
+        <a href="independent.html" class="channel-card block p-4 text-center">
+            <img src="independent.jpg" alt="Independent">
+            <p>Independent</p>
+        </a>
+        <a class="channel-card block p-4 text-center" href="/ekattor">
+            <img src="ekattor.jpg" alt="Ekattor News">
+            <p>Ekattor News</p>
+        </a>
+        <a class="channel-card block p-4 text-center" href="/channeli">
+            <img src="channeli.jpg" alt="Channel I">
+            <p>Channel I</p>
+        </a>
+        <a class="channel-card block p-4 text-center" href="/showbox">
+            <img src="showbox.jpg" alt="Show Box">
+            <p>Show Box</p>
+        </a>
+        <a href="yrfmusic.htm" class="channel-card block p-4 text-center">
+            <img src="yrfmusic.jpg" alt="YRF Music">
+            <p>YRF Music</p>
+        </a>
+        <a class="channel-card block p-4 text-center" href="/masti">
+            <img src="masti.jpg" alt="Masti">
+            <p>Masti</p>
+        </a>
+        <a class="channel-card block p-4 text-center" href="/joomusic">
+            <img src="joomusic.jpg" alt="Joo Music">
+            <p>Joo Music</p>
+        </a>
+        <a href="bhpcinema" class="channel-card block p-4 text-center">
+            <img src="bhpcinema.jpg" alt="Bhojpuri Cinema">
+            <p>Bhojpuri Cinema</p>
+        </a>
     </div>
 
+    <!-- Floating Action Button -->
+    <div class="fab" id="fab">
+        <i class="fas fa-plus"></i>
+    </div>
 
+    <!-- Back to Top Button -->
+    <div class="back-to-top" id="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </div>
 
-    <script>
-
-        // Dark Mode Toggle with Local Storage
-
-        const toggleButton = document.getElementById('theme-toggle');
-
-        const body = document.body;
-
-        const cards = document.querySelectorAll('.channel-card');
-
-
-
-        function applyDarkMode(enable) {
-
-            if (enable) {
-
-                body.classList.add('dark');
-
-                body.classList.replace('bg-gray-100', 'bg-gray-900');
-
-                body.classList.replace('text-gray-900', 'text-gray-200');
-
-                cards.forEach(card => {
-
-                    card.classList.replace('bg-white', 'bg-gray-800');
-
-                    card.classList.replace('text-gray-900', 'text-gray-200');
-
-                });
-
-                toggleButton.textContent = "☀️";
-
-                localStorage.setItem('dark-mode', 'enabled');
-
-            } else {
-
-                body.classList.remove('dark');
-
-                body.classList.replace('bg-gray-900', 'bg-gray-100');
-
-                body.classList.replace('text-gray-200', 'text-gray-900');
-
-                cards.forEach(card => {
-
-                    card.classList.replace('bg-gray-800', 'bg-white');
-
-                    card.classList.replace('text-gray-200', 'text-gray-900');
-
-                });
-
-                toggleButton.textContent = "🌙";
-
-                localStorage.setItem('dark-mode', 'disabled');
-
-            }
-
-        }
-
-
-
-        // Load theme from localStorage
-
-        if (localStorage.getItem('dark-mode') === 'enabled') {
-
-            applyDarkMode(true);
-
-        }
-
-
-
-        toggleButton.addEventListener('click', () => {
-
-            applyDarkMode(!body.classList.contains('dark'));
-
-        });
-
-
-
-        // Real-Time Search
-
-        document.getElementById('search').addEventListener('input', function() {
-
-            let searchValue = this.value.toLowerCase();
-
-            document.querySelectorAll('.channel-card').forEach(card => {
-
-                let name = card.querySelector('p').textContent.toLowerCase();
-
-                card.style.display = name.includes(searchValue) ? "block" : "none";
-
-            });
-
-        });
-
-    </script>
-
-
-<!-- Footer -->
-    <footer class="p-4 bg-gray-800 text-white text-center mt-8">
-        ©️ 2025 Rs Live Tv. All rights reserved.
+    <!-- Footer -->
+    <footer>
+        <p>© 2025 Rs Live TV. All rights reserved.</p>
+        <div class="flex justify-center gap-6 mt-4">
+            <a href="https://t.me/rslivetv" target="_blank" class="text-white hover:text-blue-300">
+                <i class="fab fa-telegram-plane text-xl"></i>
+            </a>
+            <a href="#" class="text-white hover:text-blue-300">
+                <i class="fab fa-facebook-f text-xl"></i>
+            </a>
+            <a href="#" class="text-white hover:text-blue-300">
+                <i class="fab fa-twitter text-xl"></i>
+            </a>
+        </div>
     </footer>
 
-<!--Adsterra-->
-    <script async="async" data-cfasync="false" src="//pl26377079.profitableratecpm.com/cdeccdd75d3e2e6916a42ce9653cfb08/invoke.js"></script>
-<div id="container-cdeccdd75d3e2e6916a42ce9653cfb08"></div>
-    
-	<br><br><br><br><br><br>
+    <script>
+        // Dark Mode Toggle
+        const toggleButton = document.getElementById('theme-toggle');
+        const body = document.body;
+        const cards = document.querySelectorAll('.channel-card');
 
+        function applyDarkMode(enable) {
+            if (enable) {
+                body.classList.add('dark');
+                body.classList.replace('bg-gray-100', 'bg-gray-900');
+                body.classList.replace('text-gray-900', 'text-gray-200');
+                cards.forEach(card => {
+                    card.classList.replace('bg-white', 'bg-gray-800');
+                    card.classList.replace('text-gray-900', 'text-gray-200');
+                });
+                toggleButton.innerHTML = '<i class="fas fa-sun text-lg"></i>';
+                localStorage.setItem('dark-mode', 'enabled');
+            } else {
+                body.classList.remove('dark');
+                body.classList.replace('bg-gray-900', 'bg-gray-100');
+                body.classList.replace('text-gray-200', 'text-gray-900');
+                cards.forEach(card => {
+                    card.classList.replace('bg-gray-800', 'bg-white');
+                    card.classList.replace('text-gray-200', 'text-gray-900');
+                });
+                toggleButton.innerHTML = '<i class="fas fa-moon text-lg"></i>';
+                localStorage.setItem('dark-mode', 'disabled');
+            }
+        }
 
+        if (localStorage.getItem('dark-mode') === 'enabled') {
+            applyDarkMode(true);
+        }
 
+        toggleButton.addEventListener('click', () => {
+            applyDarkMode(!body.classList.contains('dark'));
+        });
+
+        // Real-Time Search
+        document.getElementById('search').addEventListener('input', function() {
+            const searchValue = this.value.toLowerCase();
+            cards.forEach(card => {
+                const name = card.querySelector('p').textContent.toLowerCase();
+                card.style.display = name.includes(searchValue) ? 'block' : 'none';
+            });
+        });
+
+        // Back to Top
+        const backToTop = document.getElementById('back-to-top');
+        window.addEventListener('scroll', () => {
+            backToTop.classList.toggle('show', window.scrollY > 300);
+        });
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Floating Action Button
+        const fab = document.getElementById('fab');
+        fab.addEventListener('click', () => {
+            const actions = [
+                { icon: 'fas fa-share', text: 'Share', action: sharePage },
+                { icon: 'fas fa-star', text: 'Rate Us', action: rateUs }
+            ];
+            const actionMenu = document.createElement('div');
+            actionMenu.className = 'fixed bottom-24 right-6 bg-white rounded-lg shadow-lg p-4 flex flex-col gap-2 z-1000';
+            actions.forEach(action => {
+                const button = document.createElement('button');
+                button.className = 'flex items-center gap-2 px-4 py-2 text-gray-800 hover:bg-gray-100 rounded text-sm';
+                button.innerHTML = `<i class="${action.icon}"></i> ${action.text}`;
+                button.addEventListener('click', () => {
+                    action.action();
+                    actionMenu.remove();
+                });
+                actionMenu.appendChild(button);
+            });
+            document.body.appendChild(actionMenu);
+            setTimeout(() => actionMenu.remove(), 5000);
+        });
+
+        function sharePage() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Rs Live TV',
+                    url: window.location.href
+                }).catch(() => alert('Share feature not supported.'));
+            } else {
+                alert('Copy the link to share: ' + window.location.href);
+            }
+        }
+
+        function rateUs() {
+            alert('Thank you for your feedback! Rate us in your app store.');
+        }
+
+        // Lazy Load Images
+        document.querySelectorAll('.channel-card img').forEach(img => {
+            img.setAttribute('loading', 'lazy');
+        });
+
+        // Keyboard Accessibility
+        document.addEventListener('keydown', (e) => {
+            if (e.key === '/') {
+                e.preventDefault();
+                document.querySelector('#search').focus();
+            }
+            if (e.key === 't') {
+                applyDarkMode(!body.classList.contains('dark'));
+            }
+        });
+
+        // Favorite Channels
+        const favoriteChannels = JSON.parse(localStorage.getItem('favorites')) || [];
+        cards.forEach(card => {
+            const channelName = card.querySelector('p').textContent;
+            const favoriteBtn = document.createElement('button');
+            favoriteBtn.className = 'absolute top-2 right-2 text-gray-400 hover:text-red-500 focus:outline-none';
+            favoriteBtn.innerHTML = favoriteChannels.includes(channelName) ? '<i class="fas fa-heart"></i>' : '<i class="far fa-heart"></i>';
+            favoriteBtn.setAttribute('aria-label', 'Toggle favorite');
+            favoriteBtn.addEventListener('click', () => {
+                if (favoriteChannels.includes(channelName)) {
+                    favoriteChannels.splice(favoriteChannels.indexOf(channelName), 1);
+                    favoriteBtn.innerHTML = '<i class="far fa-heart"></i>';
+                } else {
+                    favoriteChannels.push(channelName);
+                    favoriteBtn.innerHTML = '<i class="fas fa-heart"></i>';
+                }
+                localStorage.setItem('favorites', JSON.stringify(favoriteChannels));
+            });
+            card.appendChild(favoriteBtn);
+        });
+    </script>
 </body>
-
 </html>
