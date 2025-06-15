@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie-edge">
+    <meta name="keywords" content="video, streaming, cine arena, cine-arena, sports">
+    <meta name="description" content="Rs live streaming - Watch Sports for free.">
+    <title>Rs Live Tv</title>
+    <link rel="icon" href="favicon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Premium Header Style */
+        .header-container {
+            background: linear-gradient(135deg, #1a237e 0%, #283593 50%, #3949ab 100%);
+            padding: 20px 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .header-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%);
+            z-index: 0;
+        }
+        
+        .logo {
+            height: 60px;
+            transition: all 0.4s ease;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+            position: relative;
+            z-index: 1;
+        }
+        
+        .logo:hover {
+            transform: scale(1.05) rotate(-2deg);
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4));
+        }
+        
+        /* Premium Category Design */
+        .category-container {
+            background: linear-gradient(135deg, #1e3a8a 0%, #172554 100%);
+            border-radius: 16px;
+            padding: 12px;
+            margin: 20px auto;
+            max-width: 95%;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .category-menu {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            padding: 8px;
+        }
+        
+        .category-item {
+            position: relative;
+            padding: 12px 24px;
+            border-radius: 50px;
+            color: white;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .category-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(255,255,255,0.15) 0%, transparent 100%);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .category-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .category-item:hover::before {
+            opacity: 1;
+        }
+        
+        .category-item.active {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+        }
+        
+        .category-icon {
+            font-size: 18px;
+        }
+        
+        /* Channel Card Premium Design */
+        .channel-card {
+            border: none;
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background: white;
+            z-index: 1;
+        }
+        
+        .channel-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            z-index: 2;
+        }
+        
+        .channel-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .channel-card img {
+            transition: all 0.3s ease;
+            border-radius: 12px;
+            width: 100%;
+            height: 120px;
+            object-fit: contain;
+            padding: 12px;
+        }
+        
+        .channel-card:hover img {
+            transform: scale(1.05);
+        }
+        
+        .channel-card .channel-name {
+            padding: 12px;
+            font-weight: 600;
+            color: #1f2937;
+            text-align: center;
+            background: rgba(249, 250, 251, 0.8);
+            border-top: 1px solid rgba(209, 213, 219, 0.5);
+            border-radius: 0 0 16px 16px;
+        }
+        
+        /* Dark Mode Styles */
+        .dark .channel-card {
+            background: #1f2937;
+        }
+        
+        .dark .channel-card .channel-name {
+            color: #f3f4f6;
+            background: rgba(31, 41, 55, 0.8);
+            border-top: 1px solid rgba(55, 65, 81, 0.5);
+        }
+        
+        /* Search Box Premium */
+        .search-container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+        
+        .search-box {
+            width: 100%;
+            padding: 14px 20px;
+            border-radius: 50px;
+            border: 2px solid #e5e7eb;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .search-box:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+            outline: none;
+        }
+        
+        .dark .search-box {
+            background: #1f2937;
+            border-color: #4b5563;
+            color: white;
+        }
+        
+        /* Theme Toggle Premium */
+        .theme-toggle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border: 2px solid #e5e7eb;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .theme-toggle:hover {
+            transform: rotate(15deg) scale(1.1);
+            background: #f3f4f6;
+        }
+        
+        .dark .theme-toggle {
+            background: #1f2937;
+            border-color: #4b5563;
+            color: white;
+        }
+        
+        /* Telegram Button Premium */
+        .telegram-button {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            z-index: 9999;
+            background: linear-gradient(135deg, #0088cc 0%, #006699 100%);
+            padding: 12px 20px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .telegram-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(135deg, #0099e6 0%, #0077b3 100%);
+        }
+        
+        .telegram-button img {
+            width: 24px;
+            height: 24px;
+            margin-right: 10px;
+        }
+        
+        /* Premium Footer */
+        .footer {
+            background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+            padding: 25px 0;
+            margin-top: 40px;
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.2);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .category-menu {
+                gap: 8px;
+            }
+            
+            .category-item {
+                padding: 10px 16px;
+                font-size: 14px;
+            }
+            
+            .logo {
+                height: 50px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-900 transition-all duration-300">
+
+    <!-- Premium Header with Logo Only -->
+    <header class="header-container">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-center">
+                <a href="https://rslivetv.netlify.app/">
+                    <img src="rslivetv.jpg" alt="Rs Live TV" class="logo">
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Premium Category Navigation -->
+    <div class="category-container">
+        <div class="category-menu">
+            <a href="https://rslivetv.netlify.app/" class="category-item active">
+                <i class="category-icon fas fa-tv"></i>
+                <span>Live TV</span>
+            </a>
+            <a href="https://livesports24.netlify.app/" class="category-item">
+                <i class="category-icon fas fa-cricket"></i>
+                <span>Cricket</span>
+            </a>
+            <a href="https://rslivemusic.netlify.app/" class="category-item">
+                <i class="category-icon fas fa-music"></i>
+                <span>Music</span>
+            </a>
+            <a href="https://rslivemovie.netlify.app" class="category-item">
+                <i class="category-icon fas fa-film"></i>
+                <span>Movies</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Premium Search Box -->
+    <div class="search-container">
+        <div class="flex items-center gap-4">
+            <input type="search" id="search" placeholder="Search Channels..." 
+                   class="search-box">
+            <button id="theme-toggle" class="theme-toggle">
+                <span id="theme-icon">🌙</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Channel Grid -->
+    <div id="channel-container" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6 p-4 max-w-7xl mx-auto">
+        <a href="starjalsha.html" class="channel-card">
+            <img src="starjalsha.jpg" alt="Star Jalsha HD">
+            <div class="channel-name">Star Jalsha HD</div>
+        </a>
+
+        <a href="enter10bangla.html" class="channel-card">
+            <img src="enter10bangla.jpeg" alt="Enterr10 Bangla">
+            <div class="channel-name">Enterr10 Bangla</div>
+        </a>
+
+        <a href="sananda.html" class="channel-card">
+            <img src="sananda.jpg" alt="Sananda">
+            <div class="channel-name">Sananda TV</div>
+        </a>
+
+        <a href="taracinema.html" class="channel-card">
+            <img src="taracinema.jpg" alt="Tara Cinema">
+            <div class="channel-name">Tara Cinema</div>
+        </a>
+
+        <a href="https://jwplwr.netlify.app/?file=https://live-stream.utkalbongo.com/hls/livebanglatvstream.m3u8" class="channel-card">
+            <img src="banglaplus.jpg" alt="Bangla Plus">
+            <div class="channel-name">Bangla Plus</div>
+        </a>
+
+        <a href="zeebangla.htm" class="channel-card">
+            <img src="zeebangla.jpg" alt="Zee Bangla">
+            <div class="channel-name">Zee Bangla</div>
+        </a>
+
+        <a href="zeebanglac.htm" class="channel-card">
+            <img src="zeebanglac.jpg" alt="Zee Bangla Cinema">
+            <div class="channel-name">Zee Bangla Cinema</div>
+        </a>
+        
+        <!-- Additional channels... -->
+    </div>
+
+    <!-- Premium Telegram Button -->
+    <a href="https://t.me/rslivetv" target="_blank" class="telegram-button">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Telegram_logo.svg/2048px-Telegram_logo.svg.png" alt="Telegram">
+        <span>Join Telegram</span>
+    </a>
+
+    <!-- Premium Footer -->
+    <footer class="footer">
+        <div class="container mx-auto px-4">
+            <p class="text-sm md:text-base">© 2025 Rs Live TV. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!--Adsterra-->
+    <script type='text/javascript' src='//pl26376834.profitableratecpm.com/b4/87/ae/b487ae4135f098686fd6ae164ab3609d.js'></script>
+
+    <script>
+        // Dark Mode Toggle with Local Storage
+        const toggleButton = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const body = document.body;
+        const activeCategory = document.querySelector('.category-item.active');
+
+        function applyDarkMode(enable) {
+            if (enable) {
+                body.classList.add('dark');
+                body.classList.replace('bg-gray-100', 'bg-gray-900');
+                themeIcon.textContent = "☀️";
+                localStorage.setItem('dark-mode', 'enabled');
+            } else {
+                body.classList.remove('dark');
+                body.classList.replace('bg-gray-900', 'bg-gray-100');
+                themeIcon.textContent = "🌙";
+                localStorage.setItem('dark-mode', 'disabled');
+            }
+        }
+
+        // Load theme from localStorage
+        if (localStorage.getItem('dark-mode') === 'enabled') {
+            applyDarkMode(true);
+        }
+
+        toggleButton.addEventListener('click', () => {
+            applyDarkMode(!body.classList.contains('dark'));
+        });
+
+        // Real-Time Search
+        document.getElementById('search').addEventListener('input', function() {
+            let searchValue = this.value.toLowerCase();
+            document.querySelectorAll('.channel-card').forEach(card => {
+                let name = card.querySelector('.channel-name').textContent.toLowerCase();
+                card.style.display = name.includes(searchValue) ? "block" : "none";
+            });
+        });
+
+        // Category active state
+        document.querySelectorAll('.category-item').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.category-item').forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
